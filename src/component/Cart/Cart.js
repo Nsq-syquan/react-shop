@@ -55,8 +55,8 @@ const Cart = () => {
             
              
                     <div className='row cart-body'>
-              { product.slice(1).map((item, index) => (
-                    <div className='row cart-body-container' key={index}>
+              { product.slice(1).map((item) => (
+                    <div className='row cart-body-container' key={item.id}>
                       <div className='col-1 cart-body-img'>
                         <input type="checkbox" />
                         <img className='cart-img' src={item.img} />
@@ -86,10 +86,10 @@ const Cart = () => {
           </div>
           {/* cart mobile */}
           
-              {product.slice(1).map((item, index) => (
+              {product.slice(1).map((item) => (
               <div className='row cart-mobile'>
                 
-                <div className='col-3 cart-body-mobile' key={index}>
+                <div className='col-3 cart-body-mobile' key={item.id}>
                   <img className='cart-img' src={item.img} />
                 </div>
                 <div className='col-8'>

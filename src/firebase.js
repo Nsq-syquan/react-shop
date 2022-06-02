@@ -1,6 +1,7 @@
 
-import { initializeApp } from "firebase/app";
 
+import { initializeApp } from "firebase/app";
+import { useState, useEffect } from "react";
 
 import { 
     GoogleAuthProvider,
@@ -9,7 +10,8 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
-    signOut
+    onAuthStateChanged,
+    signOut,
 } from "firebase/auth";
 
 import {
@@ -20,7 +22,8 @@ import {
       collection,
       where,
       addDoc,
-      setDoc
+      setDoc,
+      getDoc
     } from "firebase/firestore";
 
 
@@ -40,24 +43,24 @@ const firebaseConfig = {
 
 
   const googleProvider = new GoogleAuthProvider();
-const signInWithGoogle = async () => {
-try {
-    const res = await signInWithPopup(auth, googleProvider);
-    const user = res.user;
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const docs = await getDocs(q);
-    if (docs.docs.length === 0) {
-    await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: "google",
-        email: user.email,
-    });
-    }
-} catch (err) {
-    console.error(err);
-    alert(err.message);
-}
+  const signInWithGoogle = async () => {
+  try {
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+      const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      const docs = await getDocs(q);
+      if (docs.docs.length === 0) {
+      await addDoc(collection(db, "users"), {
+          uid: user.uid,
+          name: user.displayName,
+          authProvider: "google",
+          email: user.email,
+      });
+      }
+  } catch (err) {
+      console.error(err);
+      alert(err.message);
+  }
 };
 
 const logInWithEmailAndPassword = async (email, password) => {
@@ -70,17 +73,35 @@ const logInWithEmailAndPassword = async (email, password) => {
     }
   };
 
-  const registerWithEmailAndPassword = async (username, email, password) => {
+
+
+export function useAuth() {
+  const [currentUser, setCurrentUser] = useState();
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
+    return unsub;
+  }, [])
+
+  return currentUser;
+}
+
+
+
+
+
+  const registerWithEmailAndPassword = async (username, email, password, displayName) => {
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password, displayName);
       const user = res.user;
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         username,
         authProvider: "local",
         email,
+        displayName,
       });
-      alert("Đăng ký thành công! " + username)
+      alert("Đăng ký thành công, hệ thống tự động đăng nhập ! " + username)
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -99,7 +120,7 @@ const logInWithEmailAndPassword = async (email, password) => {
 
   const logout = () => {
     signOut(auth);
-    console.log("Đã đăng xuất")
+    alert("Đã đăng xuất")
   };
 
   // Order

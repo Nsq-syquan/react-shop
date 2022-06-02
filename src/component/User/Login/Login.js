@@ -9,11 +9,17 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
+     
     const handleLogin = () => {
         if (!email) alert("Please enter username");
         logInWithEmailAndPassword( email, password);
-        navigate("/");
+        setTimeout(() => {
+            navigate("/");
+
+        }, 2000);
+
+
+
     }
 
     const handleLogout = () => {

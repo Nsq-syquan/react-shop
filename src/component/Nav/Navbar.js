@@ -1,34 +1,34 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
-import { BsBadgeAr } from "react-icons/bs";
-import { useState } from "react";
+import { AiOutlineSplitCells } from "react-icons/ai"
+import { BsBadgeAr, BsPersonCircle } from "react-icons/bs";
+import { useState, useEffect } from "react";
+import { currentUser, useAuth, logout } from "../../firebase";
 
 
 const Navbar = () => {
-    const [isActive, setActive] = useState(false)
-    const [isUser, setUser] = useState(false)
-    const handleClick = () => {
-        if(isActive == false){
-            setActive(true)
-        }
-        else{
-            setActive(false )
-        }
+
+    const currentUser = useAuth();
+
+    const handleLogout = () => {
+        logout()
     }
 
+    
+    
     return (
     <>
         <div className="header-nav">
-                <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark ">
+                <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light ">
                     <div className="container">
                         <Link className="navbar-brand" to={"/product"}><BsBadgeAr className="header-logo"/></Link>
-                        <button className="navbar-toggler" type="button" onClick={handleClick} data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-expanded={isActive} aria-controls="navbarSupportedContent"  >
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-expanded="false" aria-controls="navbarSupportedContent"  >
                         <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                            {/* <a className="nav-link active" aria-current="page" href="#">Home</a> */}
+                            
                             <Link className="nav-link active" aria-current="page" to={"/"}>Home</Link>
                             </li>
                             <li className="nav-item">
@@ -45,11 +45,34 @@ const Navbar = () => {
                             <Link to={"/cart"} >
                                 <FaShoppingCart className="icon-cart"/>
                             </Link>
+                            {!currentUser && 
+                            <>
+                                <Link to={"/login"} className="nav-login">
+                                    Đăng nhập
+                                </Link>
+                            </>
+                            }
+
+                            {currentUser &&
+                                <>
+                                    <ul className="nav-login nav-login--has-dropdown"><BsPersonCircle /> {currentUser?.email} 
+                                        <div class="dropdown-profile" >
+                                            <li><button class="dropdown-item" type="button">Profile</button></li>
+                                            <li><button class="dropdown-item" type="button">Đổi mật khẩu</button></li>
+                                            <li><button class="dropdown-item" type="button" onClick={handleLogout}>Đăng xuất <AiOutlineSplitCells /></button></li>
+                                        </div>
+                                    </ul>
+                                    {/* <div>
+                                        <AiOutlineSplitCells className="icon-logout" onClick={handleLogout}/>
+                                    </div>
+                                */}
+                                </>
+                            }
                             
-                            <Link to={"/login"} className="nav-login">
-                                
-                                Đăng nhập
-                            </Link>
+                            
+
+                            
+                            
                         </div>
                         </div>
                     </div>
