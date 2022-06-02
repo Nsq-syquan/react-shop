@@ -1,5 +1,7 @@
 
 import { initializeApp } from "firebase/app";
+
+
 import { 
     GoogleAuthProvider,
     getAuth,
@@ -11,12 +13,14 @@ import {
 } from "firebase/auth";
 
 import {
+      doc,
       getFirestore,
       query,
       getDocs,
       collection,
       where,
-      addDoc
+      addDoc,
+      setDoc
     } from "firebase/firestore";
 
 
@@ -98,6 +102,19 @@ const logInWithEmailAndPassword = async (email, password) => {
     console.log("Đã đăng xuất")
   };
 
+  // Order
+
+  const addOrder = async (infoCart) => {
+    
+    try {
+      const newOrder =  doc(collection(db, "orders"));
+      await setDoc(newOrder, infoCart)
+      alert("Đặt hàng thành công!")
+    } catch(err) {
+      console.log(err.message);
+    }
+  }
+
   export {
     auth,
     db,
@@ -106,4 +123,5 @@ const logInWithEmailAndPassword = async (email, password) => {
     registerWithEmailAndPassword,
     sendPasswordReset,
     logout,
+    addOrder,
   };

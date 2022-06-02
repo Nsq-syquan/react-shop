@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const Navbar = () => {
     const [isActive, setActive] = useState(false)
-
+    const [isUser, setUser] = useState(false)
     const handleClick = () => {
         if(isActive == false){
             setActive(true)

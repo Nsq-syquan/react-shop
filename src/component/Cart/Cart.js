@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { BsX } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-// import { CartContext } from '../../Contexts/CartContext';
+
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct } from "../../redux/productSlice";
 
 const Cart = () => {
   const [isQuantity, setQuantity] = useState(1);
   const product = useSelector((state) => state.product.products)
+  const [isTotal, setTotal] = useState(0)
   const dispatch = useDispatch();
   
   const increase = () => {
@@ -19,6 +20,8 @@ const Cart = () => {
     setQuantity((isQuantity) => isQuantity - 1);
 
   }
+
+  
   
   function handleDelete(item) {
    
@@ -62,7 +65,7 @@ const Cart = () => {
                         <Link className='cart-body-title2' to={`/product-${item.id}`}>{item.title}</Link>
                       </div>
                       <div className='col-2 cart-price-2'>
-                        <span>{item.price} VND</span>
+                        <span>{item.price} $</span>
                       </div>
                       <div className="col-1 btn-group quantity-input" role="group" >
                         <button type="button" className="btn  btn-quantity " onClick={decrease}>-</button>
@@ -70,12 +73,13 @@ const Cart = () => {
                         <button type="button" className="btn  btn-quantity " onClick={increase}>+</button>
                       </div>
                       <div className='col-2 cart-price'>
-                        <span>{item.price} VND</span>
+                        <span>{item.price*item.quantity} $</span>
                       </div>
                       <div className='col-1 cart-delete' onClick={() => handleDelete(item)}>
                         <BsX />
                       </div>
                     </div>
+                    
               )
             )}
             </div>  
@@ -93,7 +97,7 @@ const Cart = () => {
                     <a href='#' className='cart-body-title2'>{item.title}</a>
                   </div>
                   <div className='row price-mobile'>
-                    <span>x {item.price} VND</span> 
+                    <span>x {item.price} $</span> 
                   </div>
                 </div>
                 <div className='col-1 cart-delete' onClick={() => handleDelete(item)}>
@@ -103,6 +107,8 @@ const Cart = () => {
                 
             )
           )}
+
+          
           
           
           
@@ -118,7 +124,7 @@ const Cart = () => {
           </div> 
           {/* Button mobile */}
           <div className='row fixed-bottom btn-cart-mobile'>
-            <button type="button" className="btn btn-success">Đặt hàng</button>
+            <button type="button" className="btn btn-success">Tiết tục</button>
           </div>  
         </div>
     </>  

@@ -34,7 +34,7 @@ const ProdCard = (props) => {
 
     
     return (
-    <>
+    
     <div className="col" >
         <div className="card" key={id}>
             <img src={img} className="img-fluid product-img" />
@@ -45,7 +45,7 @@ const ProdCard = (props) => {
                 </Link>
                 <input hidden className='quantity-value' type="text" value={isQuantity} />
                 
-                <p className="card-text">{description}</p>
+                <p className="card-text">{price} $</p>
                 {isAdded ? (
                     <button disabled type="button" className="btn btn-success btn-add-product">Đã thêm</button>
                 ) : (
@@ -53,8 +53,8 @@ const ProdCard = (props) => {
                 )}
             </div>
         </div>
-        </div>
-    </>  
+    </div>
+     
     )
 }
 export default ProdCard;

@@ -84,10 +84,10 @@ const DetailProduct = (props) => {
                 </div>
                 <div className='row'>
                   <div className='col-5 detail-price'>
-                    <p>{product.price} VNĐ</p>
+                    <p>{product.price} $</p>
                   </div>  
                   <div className='col-7 detail-price-sale'>
-                    <p>{product.price} VNĐ</p>
+                    <p>{product.price} $</p>
                   </div>  
                 </div>
                 <div className='row p-4'>

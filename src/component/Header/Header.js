@@ -1,8 +1,6 @@
 
-
-
-
 const Header = () => {
+
     return (
     <>
         <div className="header-img header-body">

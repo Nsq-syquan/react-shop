@@ -16,8 +16,8 @@ const Product = (props) => {
                     </div>
 
                     <div className="row row-cols-1 row-cols-md-4 g-4">
-                                { allProduct.map((item) => (
-                            <div key={item.id}>
+                                { allProduct.map((item, index) => (
+                            <div key={index}>
                             
                                 <ProdCard 
                                     id={item.id} 

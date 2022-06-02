@@ -7,8 +7,8 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
-    const [isLoaded, setLoaded] = useState(false)
-    const [isError, setError] = useState('')
+    // const [isLoaded, setLoaded] = useState(false)
+    // const [isError, setError] = useState('')
 
     
     
